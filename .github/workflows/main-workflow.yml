@@ -1,0 +1,31 @@
+name: Build and Run
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: install coverage tool
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcovr
+
+    - name: tshirts fail
+      run: |
+        g++ -Wall -Wextra -Werror tshirts.c -o tshirts.out
+        ./tshirts.out
+
+    - name: misaligned fail
+      run: |
+        g++ -Wall -Wextra -Werror misaligned.c -o misaligned.out
+        ./misaligned.out
+
+    - name: alerter fail
+      run: |
+        g++ -Wall -Wextra -Werror alerter.c -o alerter.out
+        ./alerter.out

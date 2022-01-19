@@ -20,4 +20,4 @@ In this repository, the workflows are designed to make the Action fail when any 
 
 `misaligned` tries to print a map from numbers to colors, as per [this Wiki](https://en.wikipedia.org/wiki/25-pair_color_code). However, the numeric values and the separator (`|`) are misaligned. The functionality is not efficiently testable - the fault needs human inspection. Think of separating the concerns and testing them individually.
 
-`batcher` tries to batch a set of temperature readings and then write it at-once to a file. It does handle write-errors, but it's hard to test those conditions and that part of the code isn't covered by tests. Re-organize the code and write tests to cover the error-handling code.
+`alerter` sends out an alert over the network when a threshold is breached. The code stubs the network-sendng part, so that we can test without the network.
