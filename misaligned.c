@@ -13,7 +13,8 @@ int printColorMap() {
     return i * j;
 }
 
-int main() {
+int testPrintColorMap() {
+    printf( "\nPrint color map test\n");
     int result = printColorMap();
     assert(result == 25);
     printf("All is well (maybe!)\n");

@@ -43,7 +43,8 @@ void testHighPrecipitation() {
     assert(strlen(weather) > 0);
 }
 
-int main() {
+int testWeatherReport() {
+    printf("\nWeather report test\n");
     testRainy();
     testHighPrecipitation();
     printf("All is well (maybe!)\n");
