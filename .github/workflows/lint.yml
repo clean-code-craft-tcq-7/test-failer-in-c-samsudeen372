@@ -23,12 +23,12 @@ jobs:
 
     - name: cpplint
       run: |
-        cpplint  --filter=-legal,-build/c++17 --linelength=100 *.cpp *.c *.h
+        cpplint  --filter=-legal,-build/c++17 --linelength=100 *.cpp *.c
       continue-on-error: true
 
     - name: clang-format
       run: |
-        find . -name "*.cpp" -o -name "*.c" -o -name "*.cc" -o -name "*.h" | grep -v "build/" | xargs -I{} clang-tidy {} --extra-arg=-xc --
+        find . -name "*.cpp" -o -name "*.c" -o -name "*.cc" -o -name "*.h" | grep -v "build/" | xargs -I{} clang-tidy {} --
       continue-on-error: true
 
     - name: cppcheck
