@@ -9,18 +9,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: setup cmake
+      run: sudo apt install cmake
 
-    - name: tshirts fail
+    - name: build
       run: |
-        g++ -Wall -Wextra -Werror tshirts.c -o tshirts.out
-        bash .github/workflows/expectfail.sh ./tshirts.out
-
-    - name: misaligned fail
-      run: |
-        g++ -Wall -Wextra -Werror misaligned.c -o misaligned.out
-        bash .github/workflows/expectfail.sh ./misaligned.out
-
-    - name: alerter fail
-      run: |
-        g++ -Wall -Wextra -Werror alerter.c -o alerter.out
-        bash .github/workflows/expectfail.sh ./alerter.out
+        cmake -S . -B build
+        cmake --build build
+      
+    - name: expect failures in run
+      run: build/strong_tests
