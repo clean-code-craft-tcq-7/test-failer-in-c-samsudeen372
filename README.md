@@ -1,6 +1,6 @@
 # Testing & Dependencies
 
-Decomposition = Making smaller pieces of code - makes testing easier. Just as smaller sentences help us convey our intentions better.
+Decomposition = Making smaller pieces of code - makes testing easier.
 
 Testing = Specifying the output - drives us to decompose better.
 
