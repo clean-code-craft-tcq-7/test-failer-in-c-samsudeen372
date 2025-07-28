@@ -28,7 +28,7 @@ jobs:
 
     - name: clang-format
       run: |
-        find . -name "*.cpp" -o -name "*.c" -o -name "*.cc" -o -name "*.h" | grep -v "build/" | xargs -I{} clang-tidy {} --extra-arg=-xc -- -std=c++17
+        find . -name "*.cpp" -o -name "*.c" -o -name "*.cc" -o -name "*.h" | grep -v "build/" | xargs -I{} clang-tidy {} --extra-arg=-xc --
       continue-on-error: true
 
     - name: cppcheck

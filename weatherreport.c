@@ -21,12 +21,12 @@ struct SensorReadings sensorStub() {
 const char* report(struct SensorReadings (*sensorReader)()) {
     static char weather[50] = "Sunny Day";
     struct SensorReadings readings = sensorReader();
-    strcpy(weather, "Sunny Day");
+    snprintf(weather, sizeof(weather), "%s", "Sunny Day");
     if (readings.temperatureInC > 25) {
         if (readings.precipitation >= 20 && readings.precipitation < 60) {
-            strcpy(weather, "Partly Cloudy");
+            snprintf(weather, sizeof(weather), "%s", "Partly Cloudy");
         } else if (readings.windSpeedKMPH > 50) {
-            strcpy(weather, "Alert, Stormy with heavy rain");
+            snprintf(weather, sizeof(weather), "%s", "Alert, Stormy with heavy rain");
         }
     }
     return weather;
