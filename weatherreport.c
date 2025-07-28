@@ -9,6 +9,11 @@ struct SensorReadings {
     int windSpeedKMPH;
 };
 
+// This is a stub for a weather sensor. For the sake of testing 
+// we create a stub that generates weather data and allows us to
+// test the other parts of this application in isolation
+// without needing the actual Sensor during development
+
 struct SensorReadings sensorStub() {
     struct SensorReadings readings;
     readings.temperatureInC = 50;
@@ -21,6 +26,7 @@ struct SensorReadings sensorStub() {
 const char* report(struct SensorReadings (*sensorReader)()) {
     static char weather[50] = "Sunny Day";
     struct SensorReadings readings = sensorReader();
+    // precipitation < 20 is a sunny day
     snprintf(weather, sizeof(weather), "%s", "Sunny Day");
     if (readings.temperatureInC > 25) {
         if (readings.precipitation >= 20 && readings.precipitation < 60) {
@@ -39,7 +45,12 @@ void testRainy() {
 }
 
 void testHighPrecipitation() {
+    // This instance of stub needs to be different-
+    // to give high precipitation (>60) and low wind-speed (<50)
     const char* weather = report(sensorStub);
+    
+    // strengthen the assert to expose the bug
+    // (function returns Sunny day, it should predict rain)
     assert(strlen(weather) > 0);
 }
 
