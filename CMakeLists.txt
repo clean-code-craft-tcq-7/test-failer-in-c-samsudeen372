@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.14)
 project(StrongTests)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -11,7 +14,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 enable_testing()
 
-file(GLOB SOURCES "*.c")
+file(GLOB SOURCES "*.c" "*.cpp")
 add_executable(strong_tests ${SOURCES})
 
 target_link_libraries(
