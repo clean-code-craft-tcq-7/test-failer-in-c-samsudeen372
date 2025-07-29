@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 struct SensorReadings {
@@ -23,35 +24,38 @@ struct SensorReadings sensorStub() {
     return readings;
 }
 
-const char* report(struct SensorReadings (*sensorReader)()) {
-    static char weather[50] = "Sunny Day";
+char* report(struct SensorReadings (*sensorReader)()) {
+    size_t bufsize = 50;
+    char* weather = (char*)malloc(bufsize);
+    if (!weather) return NULL;
     struct SensorReadings readings = sensorReader();
-    // precipitation < 20 is a sunny day
-    snprintf(weather, sizeof(weather), "%s", "Sunny Day");
+    const char* weatherStr = "Sunny Day";
     if (readings.temperatureInC > 25) {
         if (readings.precipitation >= 20 && readings.precipitation < 60) {
-            snprintf(weather, sizeof(weather), "%s", "Partly Cloudy");
+            weatherStr = "Partly Cloudy";
         } else if (readings.windSpeedKMPH > 50) {
-            snprintf(weather, sizeof(weather), "%s", "Alert, Stormy with heavy rain");
+            weatherStr = "Alert, Stormy with heavy rain";
         }
     }
+    snprintf(weather, bufsize, "%s", weatherStr);
     return weather;
 }
 
 void testRainy() {
-    const char* weather = report(sensorStub);
+    char* weather = report(sensorStub);
     printf("%s\n", weather);
-    assert(strstr(weather, "rain") != NULL);
+    assert(weather && strstr(weather, "rain") != NULL);
+    free(weather);
 }
 
 void testHighPrecipitation() {
     // This instance of stub needs to be different-
     // to give high precipitation (>60) and low wind-speed (<50)
-    const char* weather = report(sensorStub);
-    
+    char* weather = report(sensorStub);
     // strengthen the assert to expose the bug
     // (function returns Sunny day, it should predict rain)
-    assert(strlen(weather) > 0);
+    assert(weather && strlen(weather) > 0);
+    free(weather);
 }
 
 int testWeatherReport() {
